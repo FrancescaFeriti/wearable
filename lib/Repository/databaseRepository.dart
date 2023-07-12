@@ -44,8 +44,8 @@ class DatabaseRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> insertP_access(P_access p_access) async {
-    await database.p_accessDao.insertP_access(p_access);
+  Future<void> insertP_access(P_access pAccess) async {
+    await database.p_accessDao.insertP_access(pAccess);
     notifyListeners();
   }
 
@@ -71,8 +71,8 @@ class DatabaseRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeP_access(P_access p_access) async {
-    await database.p_accessDao.deleteP_access(p_access);
+  Future<void> removeP_access(P_access pAccess) async {
+    await database.p_accessDao.deleteP_access(pAccess);
     notifyListeners();
   }
 
@@ -93,8 +93,8 @@ class DatabaseRepository extends ChangeNotifier {
 
   // UPDATE METHODS
 
-  Future<void> updateAlcool(Alcool alcool_new) async {
-    await database.alcoolDao.updateAlcool(alcool_new);
+  Future<void> updateAlcool(Alcool alcoolNew) async {
+    await database.alcoolDao.updateAlcool(alcoolNew);
     notifyListeners();
   }
 }

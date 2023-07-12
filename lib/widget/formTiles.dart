@@ -9,17 +9,17 @@ class FormTextTile extends ListTile {
   final labelText;
   final icon;
 
-  FormTextTile({this.icon, this.controller, this.labelText});
+  const FormTextTile({super.key, this.icon, this.controller, this.labelText});
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return ListTile(
-      leading: Icon(icon, color: Color.fromARGB(255, 50, 3, 59)),
+      leading: Icon(icon, color: const Color.fromARGB(255, 50, 3, 59)),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
+          SizedBox(
             width: screenSize.width / 1.5,
             child: TextFormField(
               controller: controller,
@@ -27,7 +27,7 @@ class FormTextTile extends ListTile {
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 labelText: labelText,
-                focusColor: Color.fromRGBO(213, 181, 229, 0.929),
+                focusColor: const Color.fromRGBO(213, 181, 229, 0.929),
               ),
             ),
           ),
@@ -45,17 +45,17 @@ class FormNumberTile extends ListTile {
   final labelText;
   final icon;
 
-  FormNumberTile({this.icon, this.controller, this.labelText});
+  const FormNumberTile({super.key, this.icon, this.controller, this.labelText});
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return ListTile(
-      leading: Icon(icon, color: Color.fromARGB(255, 50, 3, 59)),
+      leading: Icon(icon, color: const Color.fromARGB(255, 50, 3, 59)),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
+          SizedBox(
             width: screenSize.width / 1.5,
             child: TextFormField(
               controller: controller,
@@ -67,7 +67,7 @@ class FormNumberTile extends ListTile {
                 if (!regex.hasMatch(value!)) ret = 'Must be a number.';
                 return ret;
               },
-              keyboardType: TextInputType.numberWithOptions(signed: true),
+              keyboardType: const TextInputType.numberWithOptions(signed: true),
               decoration: InputDecoration(
                 labelText: labelText,
               ),
@@ -89,8 +89,8 @@ class FormDateTile extends ListTile {
   final onPressed;
   final DateFormat dateFormat;
 
-  FormDateTile(
-      {this.icon,
+  const FormDateTile(
+      {super.key, this.icon,
       this.labelText,
       this.date,
       required this.dateFormat,
@@ -105,7 +105,7 @@ class FormDateTile extends ListTile {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(width: 1),
                 top: BorderSide(width: 1),
@@ -117,8 +117,8 @@ class FormDateTile extends ListTile {
               alignment: Alignment.centerLeft,
               width: screenSize.width / 1.5,
               child: TextButton(
-                child: Text(dateFormat.format(date)),
                 onPressed: onPressed,
+                child: Text(dateFormat.format(date)),
               ),
             ),
           )
@@ -138,15 +138,15 @@ class DropdownButtonTileNumber extends ListTile {
   final icon;
   final onChanged;
 
-  DropdownButtonTileNumber(
-      {this.icon, this.value, this.items, this.labelText, this.onChanged});
+  const DropdownButtonTileNumber(
+      {super.key, this.icon, this.value, this.items, this.labelText, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return ListTile(
       leading: Icon(icon, color: Theme.of(context).colorScheme.secondary),
-      title: Container(
+      title: SizedBox(
         width: screenSize.width / 1.5,
         child: DropdownButton<int>(
           isExpanded: false,
@@ -155,7 +155,7 @@ class DropdownButtonTileNumber extends ListTile {
           items: items.map<DropdownMenuItem<int>>((int value) {
             return DropdownMenuItem<int>(
               value: value,
-              child: Text('${value.toString()}'),
+              child: Text(value.toString()),
             );
           }).toList(),
         ),
@@ -174,15 +174,15 @@ class DropdownButtonTileString extends ListTile {
   final icon;
   final onChanged;
 
-  DropdownButtonTileString(
-      {this.icon, this.value, this.items, this.labelText, this.onChanged});
+  const DropdownButtonTileString(
+      {super.key, this.icon, this.value, this.items, this.labelText, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return ListTile(
       leading: Icon(icon, color: Theme.of(context).colorScheme.secondary),
-      title: Container(
+      title: SizedBox(
         width: screenSize.width / 1.5,
         child: DropdownButton<String>(
           isExpanded: false,
@@ -191,7 +191,7 @@ class DropdownButtonTileString extends ListTile {
           items: items.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text('$value'),
+              child: Text(value),
             );
           }).toList(),
         ),

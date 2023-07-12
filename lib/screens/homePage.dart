@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flow1_prova/Repository/databaseRepository.dart';
 import 'package:flow1_prova/database/entities/Datahealth.dart';
@@ -31,10 +30,10 @@ class HomePage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     //get the credentials from the loginpage
     return Scaffold(
-      backgroundColor: Color.fromRGBO(213, 181, 229, 0.929),
+      backgroundColor: const Color.fromRGBO(213, 181, 229, 0.929),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(135, 47, 183, .9),
-        title: Text(
+        backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+        title: const Text(
           'THE FIRST STEP',
           style: TextStyle(
             color: Colors.white,
@@ -45,24 +44,24 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: Drawer(
-          backgroundColor: Color.fromRGBO(135, 47, 183, 1),
+          backgroundColor: const Color.fromRGBO(135, 47, 183, 1),
           child: ListView(
             padding: const EdgeInsets.all(8),
             children: [
               DrawerHeader(
+                decoration:
+                    const BoxDecoration(color: Color.fromRGBO(135, 47, 183, .9)),
                 child: Image.asset(
                   'assets/images/logo.jpeg',
                   fit: BoxFit.fill,
                 ),
-                decoration:
-                    BoxDecoration(color: Color.fromRGBO(135, 47, 183, .9)),
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   MdiIcons.humanGreeting,
                   color: Colors.white,
                 ),
-                title: Text(
+                title: const Text(
                   'Settings',
                   style: TextStyle(
                     color: Colors.white,
@@ -70,18 +69,18 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                trailing: Icon(
+                trailing: const Icon(
                   Icons.arrow_right,
                   color: Colors.white,
                 ),
                 onTap: () => _toSettingPage(context),
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   MdiIcons.glassCocktail,
                   color: Colors.white,
                 ),
-                title: Text(
+                title: const Text(
                   'Alcohol Intake',
                   style: TextStyle(
                     color: Colors.white,
@@ -89,7 +88,7 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                trailing: Icon(
+                trailing: const Icon(
                   Icons.arrow_right,
                   color: Colors.white,
                 ),
@@ -98,11 +97,11 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.monitor_heart,
                   color: Colors.white,
                 ),
-                title: Text(
+                title: const Text(
                   'Daily Monitoring',
                   style: TextStyle(
                     color: Colors.white,
@@ -110,7 +109,7 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                trailing: Icon(
+                trailing: const Icon(
                   Icons.arrow_right,
                   color: Colors.white,
                 ),
@@ -128,7 +127,7 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               Description.text_title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color.fromARGB(255, 50, 3, 59),
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -139,7 +138,7 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(30, 30, 50, 50),
               child: Text(
                 Description.text,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color.fromARGB(255, 55, 8, 81),
                   fontSize: 17,
                   fontWeight: FontWeight.normal,
@@ -149,7 +148,7 @@ class HomePage extends StatelessWidget {
             ),
             Text(
               Description.text_last,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color.fromARGB(255, 50, 3, 59),
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -160,11 +159,11 @@ class HomePage extends StatelessWidget {
         )),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.logout_outlined),
         onPressed: () {
           _toLoginPage(context);
         },
-        backgroundColor: Color.fromRGBO(135, 47, 183, .9),
+        backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+        child: const Icon(Icons.logout_outlined),
       ),
     );
   }
@@ -178,22 +177,22 @@ class HomePage extends StatelessWidget {
     //Navigator.pop(context);
     //Then pop the HomePage
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 
   void _toAlcoolPage(BuildContext context) {
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => AlcoolPage()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => const AlcoolPage()));
   }
 
   void _toSettingPage(BuildContext context) async {
-    List<P_access> access_list =
+    List<P_access> accessList =
         await Provider.of<DatabaseRepository>(context, listen: false)
             .findAllP_access();
-    int last_id = access_list.length;
-    if (last_id == 0) {
+    int lastId = accessList.length;
+    if (lastId == 0) {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => SettingPage()));
+          MaterialPageRoute(builder: (context) => const SettingPage()));
     } else {
       _openDialog(context);
       /*
@@ -206,7 +205,7 @@ class HomePage extends StatelessWidget {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-            title: Text('Modify Personal Informations?',
+            title: const Text('Modify Personal Informations?',
                 style: TextStyle(
                     fontFamily: 'MarcellusSC',
                     color: Color.fromARGB(255, 50, 3, 59))),
@@ -214,7 +213,7 @@ class HomePage extends StatelessWidget {
               height: 130,
               child: Center(
                 child: Column(children: [
-                  Text(
+                  const Text(
                       'You have already inserted your personal information. Do you wanna modify them?'),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -222,15 +221,15 @@ class HomePage extends StatelessWidget {
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    Color.fromRGBO(213, 181, 229, 0.929)),
+                                    const Color.fromRGBO(213, 181, 229, 0.929)),
                             onPressed: () => Navigator.of(context).pop(),
-                            child: Text('No')),
+                            child: const Text('No')),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    Color.fromRGBO(213, 181, 229, 0.929)),
+                                    const Color.fromRGBO(213, 181, 229, 0.929)),
                             onPressed: () => _updateSetting(context),
-                            child: Text('Yes')),
+                            child: const Text('Yes')),
                       ])
                 ]),
               ),
@@ -238,14 +237,14 @@ class HomePage extends StatelessWidget {
   }
 
   void _updateSetting(BuildContext context) async {
-    List<P_access> access_list =
+    List<P_access> accessList =
         await Provider.of<DatabaseRepository>(context, listen: false)
             .findAllP_access();
-    int last_id = access_list.length;
+    int lastId = accessList.length;
     Provider.of<DatabaseRepository>(context, listen: false)
-        .removeP_access(access_list[last_id - 1]);
+        .removeP_access(accessList[lastId - 1]);
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => SettingPage()));
+        MaterialPageRoute(builder: (context) => const SettingPage()));
   }
 
   /*
@@ -259,7 +258,7 @@ class HomePage extends StatelessWidget {
 
   void _toDailyMonitoring(BuildContext context) {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => DailyMonitoring()));
+        MaterialPageRoute(builder: (context) => const DailyMonitoring()));
   }
 
   Future<int> _refreshTokens() async {
@@ -292,15 +291,11 @@ class HomePage extends StatelessWidget {
       }
     }
 
-    DateTime now = DateTime.now().subtract(Duration(days: 1));
+    DateTime now = DateTime.now().subtract(const Duration(days: 1));
     final date =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
 
-    final url = Impact.baseUrl +
-        Impact.restHeartEndPoint +
-        '/patients/' +
-        Impact.patientUsername +
-        '/day/$date';
+    final url = '${Impact.baseUrl}${Impact.restHeartEndPoint}/patients/${Impact.patientUsername}/day/$date';
 
     final header = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
@@ -320,10 +315,10 @@ class HomePage extends StatelessWidget {
       List<Resthealth> restHeartlist =
           await Provider.of<DatabaseRepository>(context, listen: false)
               .findAllResthealth();
-      int last_id = restHeartlist.length;
+      int lastId = restHeartlist.length;
       print('Corretto fino a qui');
 
-      if (last_id > 0 && restHeartlist[last_id - 1].date != date) {
+      if (lastId > 0 && restHeartlist[lastId - 1].date != date) {
         Resthealth newRest = Resthealth(1, date, value);
         // ignore: use_build_context_synchronously
         await Provider.of<DatabaseRepository>(context, listen: false)
@@ -347,15 +342,11 @@ class HomePage extends StatelessWidget {
       }
     }
 
-    DateTime now = DateTime.now().subtract(Duration(days: 1));
+    DateTime now = DateTime.now().subtract(const Duration(days: 1));
     final date =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
 
-    final url = Impact.baseUrl +
-        Impact.hearthRateEndPoint +
-        '/patients/' +
-        Impact.patientUsername +
-        '/day/$date';
+    final url = '${Impact.baseUrl}${Impact.hearthRateEndPoint}/patients/${Impact.patientUsername}/day/$date';
 
     final header = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
@@ -367,30 +358,30 @@ class HomePage extends StatelessWidget {
       final decodedResponse = jsonDecode(response.body);
       //print(decodedResponse);
       String date = decodedResponse['data']['date'];
-      int tot_campioni = decodedResponse['data']['data'].length;
+      int totCampioni = decodedResponse['data']['data'].length;
 
       for (int h = 0; h < 24; h++) {
-        double sum_hour = 0;
-        int n_hour = 0;
-        DateTime hour_start = DateFormat("hh:mm:ss").parse("${h}:00:00");
-        DateTime hour_end = DateFormat("hh:mm:ss").parse("$h:59:59");
-        for (int campione = 0; campione < tot_campioni; campione++) {
+        double sumHour = 0;
+        int nHour = 0;
+        DateTime hourStart = DateFormat("hh:mm:ss").parse("$h:00:00");
+        DateTime hourEnd = DateFormat("hh:mm:ss").parse("$h:59:59");
+        for (int campione = 0; campione < totCampioni; campione++) {
           DateTime decodedData = DateFormat("hh:mm:ss")
               .parse(decodedResponse['data']['data'][campione]['time']);
-          if (decodedData.isAfter(hour_start) &&
-              decodedData.isBefore(hour_end)) {
-            sum_hour =
-                sum_hour + decodedResponse['data']['data'][campione]['value'];
-            n_hour = n_hour + 1;
+          if (decodedData.isAfter(hourStart) &&
+              decodedData.isBefore(hourEnd)) {
+            sumHour =
+                sumHour + decodedResponse['data']['data'][campione]['value'];
+            nHour = nHour + 1;
           }
         }
-        sum_hour = sum_hour / n_hour;
+        sumHour = sumHour / nHour;
 
         //creo l'oggetto
         List<Datahealth> heartlist =
             await Provider.of<DatabaseRepository>(context, listen: false)
                 .findAllDatahealth();
-        int last_id = heartlist.length;
+        int lastId = heartlist.length;
         print('Corretto fino a qua');
 
         /*
@@ -419,15 +410,11 @@ class HomePage extends StatelessWidget {
       }
     }
 
-    DateTime now = DateTime.now().subtract(Duration(days: 1));
+    DateTime now = DateTime.now().subtract(const Duration(days: 1));
     final date =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
 
-    final url = Impact.baseUrl +
-        Impact.stepsEndPoint +
-        '/patients/' +
-        Impact.patientUsername +
-        '/day/$date';
+    final url = '${Impact.baseUrl}${Impact.stepsEndPoint}/patients/${Impact.patientUsername}/day/$date';
 
     final header = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
@@ -439,13 +426,13 @@ class HomePage extends StatelessWidget {
       final decodedResponse = jsonDecode(response.body);
       //print(decodedResponse);
       String date = decodedResponse['data']['date'];
-      int tot_campioni = decodedResponse['data']['data'].length;
+      int totCampioni = decodedResponse['data']['data'].length;
 
-      int sum_day = 0;
+      int sumDay = 0;
 
-      for (int l = 0; l < tot_campioni; l++) {
-        int num_passi = int.parse(decodedResponse['data']['data'][l]['value']);
-        sum_day = sum_day + num_passi;
+      for (int l = 0; l < totCampioni; l++) {
+        int numPassi = int.parse(decodedResponse['data']['data'][l]['value']);
+        sumDay = sumDay + numPassi;
       }
 
       //creo l'oggetto
@@ -453,11 +440,11 @@ class HomePage extends StatelessWidget {
       List<Steps> stepslist =
           await Provider.of<DatabaseRepository>(context, listen: false)
               .findAllSteps();
-      int last_id = stepslist.length;
+      int lastId = stepslist.length;
       print('Corretto fino a qui');
 
-      if (last_id > 0 && stepslist[last_id - 1].day != date) {
-        Steps newSteps = Steps(1, date, sum_day);
+      if (lastId > 0 && stepslist[lastId - 1].day != date) {
+        Steps newSteps = Steps(1, date, sumDay);
         // ignore: use_build_context_synchronously
         await Provider.of<DatabaseRepository>(context, listen: false)
             .insertSteps(newSteps);

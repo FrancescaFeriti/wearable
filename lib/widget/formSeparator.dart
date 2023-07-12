@@ -6,14 +6,14 @@ class FormSeparator extends StatelessWidget {
 
   final label;
 
-  FormSeparator({this.label});
+  const FormSeparator({super.key, this.label});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,25 +22,25 @@ class FormSeparator extends StatelessWidget {
                 height: 2,
                 width: 75,
                 child: Container(
-                  color: Color.fromARGB(255, 50, 3, 59),
+                  color: const Color.fromARGB(255, 50, 3, 59),
                 ),
               ),
               Expanded(
                   child: Center(
                       child: Text(
                 label,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 50, 3, 59)),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 50, 3, 59)),
               ))),
               SizedBox(
                 height: 2,
                 width: 75,
                 child: Container(
-                  color: Color.fromARGB(255, 50, 3, 59),
+                  color: const Color.fromARGB(255, 50, 3, 59),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
     );

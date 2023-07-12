@@ -6,7 +6,7 @@ import 'package:flow1_prova/screens/homePage.dart';
 import 'package:flow1_prova/Repository/databaseRepository.dart';
 
 class SettingPage extends StatefulWidget {
-  SettingPage({Key? key}) : super(key: key);
+  const SettingPage({Key? key}) : super(key: key);
   static const routename = 'SettingPage';
 
   @override
@@ -47,8 +47,8 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(135, 47, 183, .9),
-        title: Text(
+        backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+        title: const Text(
           'Profile Settings',
           style: TextStyle(fontFamily: 'MarcellusSC', fontSize: 30),
         ),
@@ -61,7 +61,7 @@ class _SettingPageState extends State<SettingPage> {
               children: <Widget>[
                 TextFormField(
                   decoration: const InputDecoration(
-                    icon: const Icon(
+                    icon: Icon(
                       MdiIcons.accountSettingsOutline,
                       color: Color.fromARGB(255, 50, 3, 59),
                     ),
@@ -72,7 +72,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    icon: const Icon(
+                    icon: Icon(
                       MdiIcons.accountSettingsOutline,
                       color: Color.fromARGB(255, 50, 3, 59),
                     ),
@@ -85,7 +85,7 @@ class _SettingPageState extends State<SettingPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Center(
+                      const Center(
                         child: Row(
                           children: [
                             Icon(
@@ -102,17 +102,17 @@ class _SettingPageState extends State<SettingPage> {
                               value: OpzioniEnum.male,
                               groupValue: genere,
                               onChanged: onRadioTap),
-                          Text('Male'),
+                          const Text('Male'),
                           Radio(
                               value: OpzioniEnum.female,
                               groupValue: genere,
                               onChanged: onRadioTap),
-                          Text('Female'),
+                          const Text('Female'),
                           Radio(
                               value: OpzioniEnum.other,
                               groupValue: genere,
                               onChanged: onRadioTap),
-                          Text('Other'),
+                          const Text('Other'),
                         ],
                       ),
                     ],
@@ -120,7 +120,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    icon: const Icon(Icons.height,
+                    icon: Icon(Icons.height,
                         color: Color.fromARGB(255, 50, 3, 59)),
                     hintText: 'Enter your height',
                     labelText: 'Height',
@@ -129,7 +129,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    icon: const Icon(
+                    icon: Icon(
                       MdiIcons.scaleBalance,
                       color: Color.fromARGB(255, 50, 3, 59),
                     ),
@@ -140,7 +140,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.calendar_today,
                       color: Color.fromARGB(255, 50, 3, 59),
                     ),
@@ -149,7 +149,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   onChanged: (newValue) => userData.updateDateOfBirth(newValue),
                 ),
-                Center(
+                const Center(
                   child: Row(
                     children: [
                       Icon(
@@ -191,13 +191,13 @@ class _SettingPageState extends State<SettingPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            backgroundColor: Color.fromRGBO(135, 47, 183, .9),
-            child: Icon(Icons.save),
+            backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+            child: const Icon(Icons.save),
             onPressed: () => _validateAndSaveDataSetting(userData),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           FloatingActionButton(
-            backgroundColor: Color.fromRGBO(135, 47, 183, .9),
+            backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
             child: Icon(secondButtonIcon),
             onPressed: () => _backHome(context),
           ),
@@ -209,7 +209,7 @@ class _SettingPageState extends State<SettingPage> {
 
   void _backHome(BuildContext context) {
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
   void _validateAndSaveDataSetting(UserData userData) async {
@@ -223,7 +223,6 @@ class _SettingPageState extends State<SettingPage> {
 
     if (userData.name != null &&
         userData.surname != null &&
-        userData.gender != null &&
         userData.dateOfBirth != null) {
       P_access newAccess = P_access(
         lastId + 1,

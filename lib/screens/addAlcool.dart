@@ -5,13 +5,12 @@ import 'package:flow1_prova/database/entities/Alcool.dart';
 import 'package:flow1_prova/Repository/databaseRepository.dart';
 import 'package:flow1_prova/widget/formTiles.dart';
 import 'package:flow1_prova/widget/formSeparator.dart';
-import 'package:flow1_prova/utils/formats.dart';
 import 'package:provider/provider.dart';
 
 class AddAlcool extends StatefulWidget {
   final Alcool? init_alcool;
 
-  AddAlcool({Key? key, required this.init_alcool}) : super(key: key);
+  const AddAlcool({Key? key, required this.init_alcool}) : super(key: key);
 
   static const routeDisplayName = 'AddAlcool';
 
@@ -24,32 +23,24 @@ class _AddAlcoolState extends State<AddAlcool> {
   final formKey = GlobalKey<FormState>();
 
   //Variables that maintain the current form fields values in memory.
-  TextEditingController _controller1 = TextEditingController();
-  TextEditingController _controller2 = TextEditingController();
-  TextEditingController _controller3 = TextEditingController();
-  TextEditingController _controller4 = TextEditingController();
-  TextEditingController _controller5 = TextEditingController();
-  TextEditingController _controller6 = TextEditingController();
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+  final TextEditingController _controller4 = TextEditingController();
+  final TextEditingController _controller5 = TextEditingController();
+  final TextEditingController _controller6 = TextEditingController();
 
   //Here, we are using initState() to initialize the form fields values.
   //Rationale: Meal content and time are not known is the meal is new (meal == null).
   // In this case, initilize them to empty and now(), respectively, otherwise set them to the respective values.
   @override
   void initState() {
-    _controller1.text =
-        widget.init_alcool == null ? '' : widget.init_alcool!.type.toString();
-    _controller2.text =
-        widget.init_alcool == null ? '' : widget.init_alcool!.volume.toString();
-    _controller3.text = widget.init_alcool == null
-        ? ''
-        : widget.init_alcool!.quantity.toString();
-    _controller4.text = widget.init_alcool == null
-        ? ''
-        : widget.init_alcool!.percentage.toString();
-    _controller5.text =
-        widget.init_alcool == null ? '' : widget.init_alcool!.hour.toString();
-    _controller6.text =
-        widget.init_alcool == null ? '' : widget.init_alcool!.day.toString();
+    _controller1.text = widget.init_alcool == null ? '' : widget.init_alcool!.type.toString();
+    _controller2.text = widget.init_alcool == null ? '' : widget.init_alcool!.volume.toString();
+    _controller3.text = widget.init_alcool == null ? '' : widget.init_alcool!.quantity.toString();
+    _controller4.text = widget.init_alcool == null ? '' : widget.init_alcool!.percentage.toString();
+    _controller5.text = widget.init_alcool == null ? '' : widget.init_alcool!.hour.toString();
+    _controller6.text = widget.init_alcool == null ? '' : widget.init_alcool!.day.toString();
     super.initState();
   } // initState
 
@@ -71,12 +62,12 @@ class _AddAlcoolState extends State<AddAlcool> {
     //A FAB is showed to provide the "delete" functinality. It is showed only if the meal already exists.
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(135, 47, 183, .9),
-        title: Text(AddAlcool.routeDisplayName),
+        backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+        title: const Text(AddAlcool.routeDisplayName),
         actions: [
           IconButton(
             onPressed: () => _validateAndSave(context),
-            icon: Icon(Icons.done),
+            icon: const Icon(Icons.done),
           )
         ],
       ),
@@ -86,9 +77,9 @@ class _AddAlcoolState extends State<AddAlcool> {
       floatingActionButton: widget.init_alcool == null
           ? null
           : FloatingActionButton(
-              backgroundColor: Color.fromRGBO(135, 47, 183, .9),
+              backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
               onPressed: () => _deleteAndPop(context, widget.init_alcool!),
-              child: Icon(Icons.delete),
+              child: const Icon(Icons.delete),
             ),
     );
   } //build
@@ -101,35 +92,47 @@ class _AddAlcoolState extends State<AddAlcool> {
         padding: const EdgeInsets.only(top: 10, bottom: 8, left: 20, right: 20),
         child: ListView(
           children: <Widget>[
-            FormSeparator(label: 'Type'),
+            const FormSeparator(label: 'Type'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(MdiIcons.glassCocktail),
-                DropdownButton(
-                    iconSize: 16,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text('Beer'),
-                        value: 'Beer',
-                      ),
-                      DropdownMenuItem(
-                        child: Text('Wine'),
-                        value: "Wine",
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Cocktail"),
-                        value: "Cocktail",
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Other"),
-                        value: "Other",
-                      ),
-                    ],
-                    onChanged: (String? newvalue) {
-                      _controller1.text = newvalue!;
-                      setState(() {});
-                    })
+                Container(
+                  padding: const EdgeInsets.only(left: 18, right: 30),
+                  child: const Icon(
+                    MdiIcons.glassCocktail,
+                    color: Color.fromRGBO(50, 3, 59, 1),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: DropdownButton(
+                      iconSize: 16,
+                      value: _controller1.text.isEmpty ? null : _controller1.text,
+                      hint: const Text('Select Type', style: TextStyle(fontSize: 16)),
+                      style: const TextStyle(color: Colors.black),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'Beer',
+                          child: Text('Beer'),
+                        ),
+                        DropdownMenuItem(
+                          value: "Wine",
+                          child: Text('Wine'),
+                        ),
+                        DropdownMenuItem(
+                          value: "Cocktail",
+                          child: Text("Cocktail"),
+                        ),
+                        DropdownMenuItem(
+                          value: "Other",
+                          child: Text("Other"),
+                        ),
+                      ],
+                      onChanged: (String? newvalue) {
+                        _controller1.text = newvalue!;
+                        setState(() {});
+                      }),
+                )
               ],
             ),
             /*
@@ -139,36 +142,34 @@ class _AddAlcoolState extends State<AddAlcool> {
               icon: MdiIcons.glassCocktail,
             ),
             */
-            FormSeparator(label: 'Volume'),
+            const FormSeparator(label: 'Volume'),
             FormNumberTile(
               labelText: 'Volume',
               controller: _controller2,
               icon: MdiIcons.flaskOutline,
             ),
-            FormSeparator(label: 'Quantity'),
+            const FormSeparator(label: 'Quantity'),
             FormNumberTile(
               labelText: 'Quantity',
               controller: _controller3,
               icon: MdiIcons.bookmarkPlus,
             ),
-            FormSeparator(label: 'Percentage'),
+            const FormSeparator(label: 'Percentage'),
             FormNumberTile(
               labelText: 'Percentage',
               controller: _controller4,
               icon: MdiIcons.percent,
             ),
-            FormSeparator(label: 'Hour'),
+            const FormSeparator(label: 'Hour'),
             FormNumberTile(
               labelText: 'Hour',
               controller: _controller5,
               icon: MdiIcons.timetable,
             ),
-            FormSeparator(label: 'Day'),
+            const FormSeparator(label: 'Day'),
             TextFormField(
                 controller: _controller6,
-                decoration: const InputDecoration(
-                    icon: const Icon(MdiIcons.clockTimeFourOutline),
-                    labelText: 'Day')),
+                decoration: const InputDecoration(icon: Icon(MdiIcons.clockTimeFourOutline), labelText: 'Day')),
           ],
         ),
       ),
@@ -211,40 +212,33 @@ class _AddAlcoolState extends State<AddAlcool> {
           null,
           _controller6.text,
           _controller1.text,
-          int.parse(_controller3.text) as int,
-          int.parse(_controller5.text) as int,
-          double.parse(_controller2.text) as double,
-          double.parse(_controller4.text) as double,
+          int.parse(_controller3.text),
+          int.parse(_controller5.text),
+          double.parse(_controller2.text),
+          double.parse(_controller4.text),
         );
-        await Provider.of<DatabaseRepository>(context, listen: false)
-            .insertAlcool(newAlcool);
-      } //if
-      //...otherwise, edit it.
-      else {
+        await Provider.of<DatabaseRepository>(context, listen: false).insertAlcool(newAlcool);
+      } else {
         Alcool updatedAlcool = Alcool(
-          null,
+          widget.init_alcool!.id,
           _controller6.text,
           _controller1.text,
-          int.parse(_controller3.text) as int,
-          int.parse(_controller5.text) as int,
-          double.parse(_controller2.text) as double,
-          double.parse(_controller4.text) as double,
+          int.parse(_controller3.text),
+          int.parse(_controller5.text),
+          double.parse(_controller2.text),
+          double.parse(_controller4.text),
         );
 
-        await Provider.of<DatabaseRepository>(context, listen: false)
-            .updateAlcool(updatedAlcool);
+        await Provider.of<DatabaseRepository>(context, listen: false).updateAlcool(updatedAlcool);
         Navigator.pop(context);
       } //else
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => AlcoolPage()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AlcoolPage()));
     } //if
   } //_validateAndSave
 
   void _deleteAndPop(BuildContext context, Alcool alcooltorem) async {
-    await Provider.of<DatabaseRepository>(context, listen: false)
-        .removeAlcool(alcooltorem); //alcooltorem);
-    //Navigator.pop(context);
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => AlcoolPage()));
+    await Provider.of<DatabaseRepository>(context, listen: false).removeAlcool(alcooltorem); //alcooltorem);
+    // Navigator.pop(context);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AlcoolPage()));
   } //_deleteAndPop
 } //alcoolPage

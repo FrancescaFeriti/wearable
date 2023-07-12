@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -6,13 +5,10 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flow1_prova/widget/trasluced_component.dart';
 import 'package:flow1_prova/screens/homePage.dart';
-import 'package:flutter_login/flutter_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flow1_prova/utils/impact.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,7 +19,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _stateLoginPage extends State<LoginPage> {
-
   final TextEditingController myController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
@@ -43,8 +38,8 @@ class _stateLoginPage extends State<LoginPage> {
     final sp = await SharedPreferences.getInstance();
     if (sp.getString('access') != 'null') {
       //if (...){
-       // _refreshTokens()
-      
+      // _refreshTokens()
+
       //bisognerebbe anche controllare che il token di accesso sia ancora valido
       //altrimenti si fa il refresh dei token
       //if username is already set, I open the HomePage
@@ -77,7 +72,7 @@ class _stateLoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     String? credentials;
-    String? password; 
+    String? password;
 
     Size size = MediaQuery.of(context).size;
 
@@ -99,7 +94,7 @@ class _stateLoginPage extends State<LoginPage> {
                 Center(
                   child: Column(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: SizedBox(),
                       ),
                       Expanded(
@@ -111,15 +106,14 @@ class _stateLoginPage extends State<LoginPage> {
                             child: SizedBox(
                               width: size.width * .9,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
                                       top: size.width * .15,
                                       bottom: size.width * .1,
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       'LOGIN',
                                       style: TextStyle(
                                         fontSize: 25,
@@ -138,13 +132,13 @@ class _stateLoginPage extends State<LoginPage> {
                                       decoration: BoxDecoration(
                                         color: Colors.black.withOpacity(.1),
                                         borderRadius: BorderRadius.circular(20),
-                                        ),
+                                      ),
                                       child: TextFormField(
                                         controller: myController,
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(color: Colors.white),
                                         onChanged: (newValue) => credentials = myController.text,
                                         decoration: InputDecoration(
-                                          prefixIcon: Icon(
+                                          prefixIcon: const Icon(
                                             Icons.account_circle_outlined,
                                             color: Colors.white,
                                           ),
@@ -156,8 +150,8 @@ class _stateLoginPage extends State<LoginPage> {
                                             color: Colors.white.withOpacity(.5),
                                           ),
                                         ),
-                                     ),
-                                   ),
+                                      ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -169,13 +163,13 @@ class _stateLoginPage extends State<LoginPage> {
                                       decoration: BoxDecoration(
                                         color: Colors.black.withOpacity(.1),
                                         borderRadius: BorderRadius.circular(20),
-                                        ),
+                                      ),
                                       child: TextFormField(
                                         controller: passwordController,
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(color: Colors.white),
                                         onChanged: (newValue) => password = passwordController.text,
                                         decoration: InputDecoration(
-                                          prefixIcon: Icon(
+                                          prefixIcon: const Icon(
                                             Icons.lock_outlined,
                                             color: Colors.white,
                                           ),
@@ -187,25 +181,23 @@ class _stateLoginPage extends State<LoginPage> {
                                             color: Colors.white.withOpacity(.5),
                                           ),
                                         ),
-                                     ),
-                                   ),
+                                      ),
+                                    ),
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                                       RichText(
                                         text: TextSpan(
                                           text: 'Forgotten password!',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                           ),
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
                                               HapticFeedback.lightImpact();
                                               Fluttertoast.showToast(
-                                                msg:
-                                                    'Forgotten password! button pressed',
+                                                msg: 'Forgotten password! button pressed',
                                               );
                                             },
                                         ),
@@ -213,15 +205,14 @@ class _stateLoginPage extends State<LoginPage> {
                                       RichText(
                                         text: TextSpan(
                                           text: 'Create a new Account',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                           ),
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
                                               HapticFeedback.lightImpact();
                                               Fluttertoast.showToast(
-                                                msg:
-                                                    'Create a new Account button pressed',
+                                                msg: 'Create a new Account button pressed',
                                               );
                                             },
                                         ),
@@ -239,24 +230,27 @@ class _stateLoginPage extends State<LoginPage> {
                                       fixedSize: Size(size.width / 1.25, size.width / 8),
                                     ),
                                     onPressed: () async {
+                                      credentials = myController.text;
+                                      password = passwordController.text;
                                       print('credentials: $credentials, password: $password');
                                       if (credentials != null && password != null) {
                                         if (credentials == Impact.username && password == Impact.password) {
                                           await _loginUser(credentials, password);
-                                        }
-                                        else {
+                                        } else {
                                           ScaffoldMessenger.of(context)
-                                          ..removeCurrentMaterialBanner()
-                                          ..showSnackBar(SnackBar(content: Text('Wrong Credentials'),));
+                                            ..removeCurrentMaterialBanner()
+                                            ..showSnackBar(const SnackBar(
+                                              content: Text('Wrong Credentials'),
+                                            ));
                                         }
-                                      } 
+                                      }
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Sign-In',
                                       style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
@@ -266,7 +260,7 @@ class _stateLoginPage extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: SizedBox(),
                       ),
                     ],
@@ -278,16 +272,15 @@ class _stateLoginPage extends State<LoginPage> {
         ),
       ),
     );
-
   }
 
   void _toHomePage(BuildContext context) {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
   } //_toHomePage
 
   Future<int?> _authorize() async {
     final url = Impact.baseUrl + Impact.tokenEndpoint;
-    final body = {'username' : Impact.username, 'password' : Impact.password};
+    final body = {'username': Impact.username, 'password': Impact.password};
 
     print('Calling: $url');
     final response = await http.post(Uri.parse(url), body: body);
@@ -303,8 +296,7 @@ class _stateLoginPage extends State<LoginPage> {
   } //_authorize
 
   Future<int> _refreshTokens() async {
-
-    //Create the request 
+    //Create the request
     final url = Impact.baseUrl + Impact.refreshEndpoint;
     final sp = await SharedPreferences.getInstance();
     final refresh = sp.getString('refresh');
@@ -324,21 +316,19 @@ class _stateLoginPage extends State<LoginPage> {
 
     //Just return the status code
     return response.statusCode;
-    
   } //_refreshTokens
 
-  Future<int?> _getTokens() async{
-
+  Future<int?> _getTokens() async {
+    return null;
   }
-
 }
 
 class MyBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(
+  Widget buildOverscrollIndicator(
     BuildContext context,
     Widget child,
-    AxisDirection axisDirection,
+    ScrollableDetails details,
   ) {
     return child;
   }

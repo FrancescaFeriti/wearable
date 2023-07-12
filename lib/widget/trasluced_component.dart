@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-
-Widget trasluced_component(BuildContext context, IconData icon, String hintText, bool isPassword, bool isEmail) {
+Widget traslucedComponent(BuildContext context, IconData icon, String hintText, bool isPassword, bool isEmail) {
   Size size = MediaQuery.of(context).size;
   return Container(
     height: size.width / 8,
@@ -17,7 +12,9 @@ Widget trasluced_component(BuildContext context, IconData icon, String hintText,
       borderRadius: BorderRadius.circular(20),
     ),
     child: TextField(
-      style: TextStyle(color: Colors.white.withOpacity(.9),),
+      style: TextStyle(
+        color: Colors.white.withOpacity(.9),
+      ),
       obscureText: isPassword,
       keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
       decoration: InputDecoration(

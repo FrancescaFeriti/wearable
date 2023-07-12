@@ -17,7 +17,7 @@ abstract class P_accessDAO {
 
   //Query #3: DELETE -> this allows to delete a Todo from the table
   @delete //alternativa a @QUERY ('DELETE * FROM Todo')
-  Future<void> deleteP_access(P_access p_access); //floor, grazie alla chiave primaria, riesce a capire esattamente cosa deve eliminare
+  Future<void> deleteP_access(P_access pAccess); //floor, grazie alla chiave primaria, riesce a capire esattamente cosa deve eliminare
 
   //Query #4: EXTRACT_LAST_ID --> This extracts the id of the last user 
   /*

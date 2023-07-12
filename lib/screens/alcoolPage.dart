@@ -4,7 +4,6 @@ import 'package:flow1_prova/database/entities/Alcool.dart';
 import 'package:flow1_prova/screens/homePage.dart';
 import 'package:flow1_prova/Repository/databaseRepository.dart';
 import 'package:flow1_prova/screens/addAlcool.dart';
-import 'package:flow1_prova/utils/formats.dart';
 import 'package:provider/provider.dart';
 
 class AlcoolPage extends StatefulWidget {
@@ -20,20 +19,23 @@ class _stateAlcoolPage extends State<AlcoolPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(135,47,183,.9),
-        title: Text('Alcohol Page', style: TextStyle(fontFamily: 'MarcellusSC', fontSize: 30),),
+        backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+        title: const Text(
+          'Alcohol Page',
+          style: TextStyle(fontFamily: 'MarcellusSC', fontSize: 30),
+        ),
       ),
       body: Center(
         child: Consumer<DatabaseRepository>(
           builder: (context, dbr, child) {
             return FutureBuilder<List<Alcool>>(
-              initialData: [],
+              initialData: const [],
               future: dbr.findAllAlcool(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final data = snapshot.data!;
-                  return data.length == 0
-                      ? Text('The Alcohol List is currently empty for today')
+                  return data.isEmpty
+                      ? const Text('The Alcohol List is currently empty for today')
                       : ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (context, alcoolIndex) {
@@ -41,20 +43,21 @@ class _stateAlcoolPage extends State<AlcoolPage> {
                               elevation: 5,
                               child: ListTile(
                                 leading: _chooseIcon(data[alcoolIndex]),
-                                trailing: Icon(MdiIcons.noteEdit, color: Color.fromRGBO(213, 181, 229, 0.929),),
-                                title: Text('${data[alcoolIndex].type}'),
+                                trailing: const Icon(
+                                  MdiIcons.noteEdit,
+                                  color: Color.fromRGBO(213, 181, 229, 0.929),
+                                ),
+                                title: Text(data[alcoolIndex].type),
                                 subtitle: Text(
                                     'Volume : ${data[alcoolIndex].volume}, Percentage : ${data[alcoolIndex].percentage}, Hour: ${data[alcoolIndex].hour}'),
-                                onTap: () => _openUpdateDialog(
-                                    context,
-                                    data[
-                                        alcoolIndex]), //qui aprire cosa che chiede se si vuole modificare o rimuovere
+                                //qui aprire cosa che chiede se si vuole modificare o rimuovere
+                                onTap: () => _openUpdateDialog(context, data[alcoolIndex]),
                               ),
                             );
                           },
                         );
                 } else {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
               },
             );
@@ -65,15 +68,16 @@ class _stateAlcoolPage extends State<AlcoolPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            child: Icon(Icons.plus_one_outlined),
+            heroTag: 'btn1',
             onPressed: () => _toAddAlcool(context, null),
-            backgroundColor: Color.fromRGBO(135,47,183,.9),
+            backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+            child: const Icon(Icons.plus_one_outlined),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           FloatingActionButton(
-            child: Icon(Icons.home_filled),
             onPressed: () => _backHome(context),
-            backgroundColor: Color.fromRGBO(135,47,183,.9),
+            backgroundColor: const Color.fromRGBO(135, 47, 183, .9),
+            child: const Icon(Icons.home_filled),
           ),
         ],
       ),
@@ -84,28 +88,29 @@ class _stateAlcoolPage extends State<AlcoolPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Remove or Update Alcool Intake?'),
-        content: Center(
-          child: Column(
+        title: const Text('Remove or Update Alcool Intake?'),
+        content: const SingleChildScrollView(
+          child: ListBody(
             children: [
               Text(
-                'You have already inserted this Alcool Intake. Do you desire to modify or remove it?',
-              ),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text('No'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => _toAddAlcool(context, alcoolin),
-                    child: Text('Update'),
-                  ),
-                ],
+                'You have already inserted this Alcool Intake.\nDo you desire to modify or remove it?',
               ),
             ],
           ),
         ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('No'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _toAddAlcool(context, alcoolin);
+            },
+            child: const Text('Update'),
+          ),
+        ],
       ),
     );
   }
@@ -118,27 +123,34 @@ class _stateAlcoolPage extends State<AlcoolPage> {
   */
 
   void _backHome(BuildContext context) {
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
-  void _toAddAlcool(BuildContext context, Alcool? new_alcool) {
+  void _toAddAlcool(BuildContext context, Alcool? newAlcool) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => AddAlcool(init_alcool: new_alcool)),
+      MaterialPageRoute(builder: (context) => AddAlcool(init_alcool: newAlcool)),
     );
   }
 
   Icon _chooseIcon(Alcool alcool) {
     if (alcool.type == 'Beer') {
-      return Icon(MdiIcons.glassMug, color:Color.fromARGB(255, 50, 3, 59) );
+      return const Icon(MdiIcons.glassMug, color: Color.fromARGB(255, 50, 3, 59));
     } else if (alcool.type == 'Wine') {
-      return Icon(MdiIcons.glassWine, color: Color.fromARGB(255, 50, 3, 59),);
+      return const Icon(
+        MdiIcons.glassWine,
+        color: Color.fromARGB(255, 50, 3, 59),
+      );
     } else if (alcool.type == 'Cocktail') {
-      return Icon(MdiIcons.glassCocktail, color: Color.fromARGB(255, 50, 3, 59),);
+      return const Icon(
+        MdiIcons.glassCocktail,
+        color: Color.fromARGB(255, 50, 3, 59),
+      );
     } else {
-      return Icon(MdiIcons.beer, color: Color.fromARGB(255, 50, 3, 59),);
+      return const Icon(
+        MdiIcons.beer,
+        color: Color.fromARGB(255, 50, 3, 59),
+      );
     }
   }
 }

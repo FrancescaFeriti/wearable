@@ -93,7 +93,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Alcool` (`id` INTEGER, `day` TEXT NOT NULL, `type` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `hour` INTEGER NOT NULL, `volume` REAL, `percentage` REAL, FOREIGN KEY (`id`) REFERENCES `P_access` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, PRIMARY KEY (`id`, `day`, `type`, `quantity`, `hour`, `percentage`))');
+            'CREATE TABLE IF NOT EXISTS `Alcool` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `day` TEXT NOT NULL, `type` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `hour` INTEGER NOT NULL, `volume` REAL, `percentage` REAL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `P_access` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `surname` TEXT, `sex` TEXT, `birth` TEXT)');
         await database.execute(
@@ -155,7 +155,7 @@ class _$AlcoolDAO extends AlcoolDAO {
         _alcoolUpdateAdapter = UpdateAdapter(
             database,
             'Alcool',
-            ['id', 'day', 'type', 'quantity', 'hour', 'percentage'],
+            ['id'],
             (Alcool item) => <String, Object?>{
                   'id': item.id,
                   'day': item.day,
@@ -168,7 +168,7 @@ class _$AlcoolDAO extends AlcoolDAO {
         _alcoolDeletionAdapter = DeletionAdapter(
             database,
             'Alcool',
-            ['id', 'day', 'type', 'quantity', 'hour', 'percentage'],
+            ['id'],
             (Alcool item) => <String, Object?>{
                   'id': item.id,
                   'day': item.day,
@@ -210,9 +210,8 @@ class _$AlcoolDAO extends AlcoolDAO {
   }
 
   @override
-  Future<void> updateAlcool(Alcool new_alcool_version) async {
-    await _alcoolUpdateAdapter.update(
-        new_alcool_version, OnConflictStrategy.replace);
+  Future<void> updateAlcool(Alcool newAlcool) async {
+    await _alcoolUpdateAdapter.update(newAlcool, OnConflictStrategy.replace);
   }
 
   @override
@@ -329,8 +328,8 @@ class _$P_accessDAO extends P_accessDAO {
   }
 
   @override
-  Future<void> deleteP_access(P_access p_access) async {
-    await _p_accessDeletionAdapter.delete(p_access);
+  Future<void> deleteP_access(P_access pAccess) async {
+    await _p_accessDeletionAdapter.delete(pAccess);
   }
 }
 
